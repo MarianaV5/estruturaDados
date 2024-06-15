@@ -88,10 +88,23 @@ public class LinkedList {
          return temp;
     }
 
+    public void preprend(String data){
+        Node newNode = new Node(data);
+        if(length == 0){
+            head = newNode;
+            tail = newNode;
+        }else{
+            newNode.next = head;
+            head = newNode;
+        }
+        length++;
+    }
+
     public static void main(String[] args) {
         LinkedList list = new LinkedList("elemento 1");
         list.append("elemento 2");
         list.append("elemento 3");
+        list.preprend("elemento 0");
         System.out.println(list.removeLast().data);
         list.print();
         list.getHead();
