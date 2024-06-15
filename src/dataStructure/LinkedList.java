@@ -88,7 +88,7 @@ public class LinkedList {
          return temp;
     }
 
-    public void preprend(String data){
+    public void prepend(String data){
         Node newNode = new Node(data);
         if(length == 0){
             head = newNode;
@@ -100,12 +100,83 @@ public class LinkedList {
         length++;
     }
 
+    public Node removeFirst(){
+        if(length == 0) return null;
+        Node temp = head;
+        head = head.next;
+        temp.next = null;
+        length--;
+        if(length==0){
+            head=null;
+            tail=null;
+        }
+        return temp;
+    }
+
+    public Node get(int index){
+        if(index<0||index>=length) return null;
+        Node temp = head;
+        for(int i = 0;i<index;i++){
+            temp = temp.next;
+        }
+        return temp;
+    }
+
+    public boolean insert(int index, String data){
+        if(index<0||index>length) return false;
+        if(index==0){
+            prepend(data);
+            return true;
+        }
+        if (index == length) {
+            append(data);
+            return true;
+        }
+        Node newNode = new Node(data);
+        Node temp = get(index-1);
+        newNode.next = temp.next;
+        temp.next = newNode;
+        length++;
+        return true;
+    }
+
+    public boolean set(int index, String data){
+        Node temp = get(index);
+        if(temp != null){
+            temp.data = data;
+            return true;
+        }
+        return false;
+    }
+
+    public Node remove(int index){
+        if(index<0 || index>=length) return null;
+        if(index==0) return removeFirst();
+        if(index==length-1) return removeLast();
+
+        Node prev = get(index-1);
+        Node temp = prev.next;
+
+        prev.next = temp.next;
+        temp.next = null;
+        length--;
+
+        return temp;
+    }
+
     public static void main(String[] args) {
         LinkedList list = new LinkedList("elemento 1");
         list.append("elemento 2");
         list.append("elemento 3");
-        list.preprend("elemento 0");
-        System.out.println(list.removeLast().data);
+        list.prepend("elemento 0");
+        //System.out.println(list.removeLast().data);
+        //System.out.println(list.removeFirst().data);
+        //System.out.println(list.get(2).data);
+        list.insert(0,"elemento 4");
+        list.print();
+        list.set(1,"elemento 0.5");
+        list.print();
+        list.remove(2);
         list.print();
         list.getHead();
         list.getTail();
